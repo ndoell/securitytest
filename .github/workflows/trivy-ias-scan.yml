@@ -1,32 +1,29 @@
-name: Security Scans
-
+name: Trivy IaC Scan
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - master
   pull_request:
-    branches: [ "main" ]
-
 jobs:
   build:
-    name: trivy
+    name: Build
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run static analysis
+      - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'fs'
-          security-checks: 'vuln,secret,config'
-          ignore-unfixed: true
+          scan-type: 'config'
+          hide-progress: false
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
-
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH,MEDIUM'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-          category: 'code'
