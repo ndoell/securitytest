@@ -80,7 +80,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "docker://test-container"
+                  "uri": "test-container"
                 }
               }
             }
