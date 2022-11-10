@@ -22,6 +22,8 @@ jobs:
         uses: ndoell/dockle-action@master
         with:
          image: test-container
+        
+      - name: Check conents of workspace
         run: |
           ls ${{ github.workspace }}
 
