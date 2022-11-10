@@ -22,8 +22,8 @@ jobs:
         uses: ndoell/dockle-action@master
         with:
          image: test-container
-        # format: 'sarif'
-        # output: 'dockle-image-results.sarif'
+         format: 'sarif'
+         output: 'dockle-image-results.sarif'
 
         
       - name: Check conents of workspace
