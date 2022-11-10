@@ -1,0 +1,19 @@
+name: Dockle Scan Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Dockle scan
+    runs-on: self-hosted
+    steps:
+
+      - name: Upload Dockle scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'results.sarif'
+          category: 'image'
