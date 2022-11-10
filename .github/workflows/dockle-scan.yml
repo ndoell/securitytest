@@ -18,13 +18,20 @@ jobs:
         run: |
           docker build -t test-container .
 
-      - name: Dockle scan
-        uses: ndoell/dockle-action@master
-        with:
-         image: 'test-container'
-         format: 'sarif'
-         output: 'dockle-image-results.sarif'
+     # - name: Dockle scan
+     #   uses: ndoell/dockle-action@master
+     #   with:
+     #    image: 'test-container'
+     #    format: 'sarif'
+     #    output: 'dockle-image-results.sarif'
 
+      - name: Dockle Scan
+        run : |
+          export DOCKLE_LATEST=$(curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | \
+          grep '"tag_name":' | \
+          sed -E 's/.*"v([^"]+)".*/\1/' \
+          ) && \
+          docker run --rm goodwithtech/dockle:v${DOCKLE_LATEST} -f sarif -o dockle-image-results.sarif test-container
         
       - name: Check conents of workspace
         run: |
