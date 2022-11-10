@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: trivy
+    name: Dockle scan
     runs-on: self-hosted
     steps:
       - name: Checkout code
