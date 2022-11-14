@@ -38,7 +38,7 @@ jobs:
       - name: Dockle Scan
         run : |
           dockle -f sarif -o dockle-image-results.sarif test-container && \
-          sed -i 's/docker:/localhost:/g' dockle-image-results.sarif
+          sed -i 's/docker:/file:/g' dockle-image-results.sarif
 
       - name: Check conents of workspace
         run: |
