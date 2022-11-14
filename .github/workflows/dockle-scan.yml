@@ -25,6 +25,8 @@ jobs:
      #    format: 'sarif'
      #    output: 'dockle-image-results.sarif'
 
+
+# using sed -i 's/docker:/file:/g' becuase upload-sarif does not accept uri: "docker://<container>" as a valid file URI.
       - name: Dockle Scan
         run : |
           export DOCKLE_LATEST=$(curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | \
