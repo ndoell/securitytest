@@ -25,20 +25,21 @@ jobs:
      #    format: 'sarif'
      #    output: 'dockle-image-results.sarif'
 
-     # - name: Dockle Scan
-      #  run : |
-      #    export DOCKLE_LATEST=$(curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | \
-      #    grep '"tag_name":' | \
-      #    sed -E 's/.*"v([^"]+)".*/\1/' \
-      #    ) && \
-      #    docker run --rm \
-      #    -v /var/run/docker.sock:/var/run/docker.sock \
-      #    goodwithtech/dockle:v${DOCKLE_LATEST} -f sarif test-container > dockle-image-results.sarif
-      
       - name: Dockle Scan
         run : |
-          dockle -f sarif -o dockle-image-results.sarif test-container && \
+          export DOCKLE_LATEST=$(curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | \
+          grep '"tag_name":' | \
+          sed -E 's/.*"v([^"]+)".*/\1/' \
+          ) && \
+          docker run --rm \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          goodwithtech/dockle:v${DOCKLE_LATEST} -f sarif test-container > dockle-image-results.sarif && \
           sed -i 's/docker:/file:/g' dockle-image-results.sarif
+      
+     # - name: Dockle Scan
+     #   run : |
+     #     dockle -f sarif -o dockle-image-results.sarif test-container && \
+     #     sed -i 's/docker:/file:/g' dockle-image-results.sarif
 
       - name: Check conents of workspace
         run: |
